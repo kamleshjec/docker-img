@@ -1,22 +1,20 @@
-FROM quay.io/openshiftlabs/workshop-dashboard:3.7.1
+FROM golang:alpine AS build
 
-USER root
+WORKDIR /go/src/app
+ADD /app/main.go /go/src/app/
+ADD /app/main_test.go /go/src/app/
+ADD /app/static/ /go/src/app/
 
-COPY . \tmp\src
+RUN go build -o helloworld .
 
-RUN rm -rf /tmp/src/.git* && \
-    chown -R 1001 /tmp/src && \
-    chgrp -R 0 /tmp/src && \
-    chmod -R g+w /tmp/src
+FROM golang:alpine
 
-ENV TERMINAL_TAB=split
+LABEL maintainer="kamsjec@gmail.com" \
+org.label-schema.vcs-url="https://github.com/kamleshjec/tekton-pipeline"
 
-USER 1001
+WORKDIR /go/src/app
+COPY --from=build /go/src/app/ /go/src/app/
 
-RUN /usr/libexec/s2i/assemble
+EXPOSE 8000
 
-    © 2020 GitHub, Inc.
-    Terms
-    Privacy
-    Security
-    Sta
+ENTRYPOINT ["/go/src/app/helloworld"]
