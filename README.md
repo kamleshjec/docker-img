@@ -1,1 +1,1 @@
-tekton pipeline exmaple on openshift                                
+tekton pipeline example on openshift                                
