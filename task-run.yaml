@@ -1,0 +1,25 @@
+API Version:  tekton.dev/v1alpha1
+Kind: TaskRun
+Metadata:
+    Name: deploy-taskrun
+Spec:
+  Inputs:
+    Params:
+      Name: TLSVERIFY
+      Value: false
+    Resources:
+      Name: source
+      Resource Ref:
+        API Version: tekton.dev/v1alpha1
+        Name: git-repo
+  Outputs:
+    Resources:
+      Name: image
+      Paths:
+        build/image
+      Resource Ref:
+        Name: image-registry
+  Service Account Name: pipeline
+  Task Ref:
+    Kind: Task
+    Name: s2i-java-8

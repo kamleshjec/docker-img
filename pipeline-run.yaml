@@ -1,0 +1,15 @@
+API Version:  tekton.dev/v1alpha1
+Kind: PipelineRun
+Metadata:
+  Name: deploy-pipeline-run
+Spec:
+  Pipeline Ref:
+    Name: deploy-pipeline
+  Resources:
+    Name: app-git
+    Resource Ref:
+      Name: git-repo
+    Name: app-image
+    Resource Ref:
+      Name: image-registry
+  Service Account Name:  pipeline
