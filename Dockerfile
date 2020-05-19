@@ -1,20 +1,8 @@
-FROM golang:alpine AS build
+FROM alpine:3.4
 
-WORKDIR /go/src/app
-ADD /app/main.go /go/src/app/
-ADD /app/main_test.go /go/src/app/
-ADD /app/static/ /go/src/app/
+LABEL maintainer="kamsjec@gmail.com"
 
-RUN go build -o helloworld .
-
-FROM golang:alpine
-
-LABEL maintainer="kamsjec@gmail.com" \
-org.label-schema.vcs-url="https://github.com/kamleshjec/tekton-pipeline"
-
-WORKDIR /go/src/app
-COPY --from=build /go/src/app/ /go/src/app/
-
-EXPOSE 8000
-
-ENTRYPOINT ["/go/src/app/helloworld"]
+RUN apk update && apk add \
+    curl \
+    git \
+    vim
