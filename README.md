@@ -1,4 +1,6 @@
-tekton pipeline example on openshift                               
+tekton pipeline example on openshift 
+
+Method: buildah
 
 Scenario: #step1: take the source code from git repo and build container image
 #step2: once image is build push that image into image registry
